@@ -17,7 +17,7 @@ public class ForceDetachAction implements ModelEntity {
     /**
      * The interface ID
      */
-    @JsonProperty("attachment_id ")
+    @JsonProperty("attachment_id")
     private String attachmentId;
 
     /**

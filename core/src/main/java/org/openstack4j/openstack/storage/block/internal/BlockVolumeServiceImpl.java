@@ -292,4 +292,67 @@ public class BlockVolumeServiceImpl extends BaseBlockStorageServices implements 
         return post(ActionResponse.class, uri("/volumes/%s/action", volumeId)).entity(detach).execute();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ActionResponse reserve(String volumeId) {
+        Objects.requireNonNull(volumeId);
+        VariousVolumeAttachAction.ReserveAction action = new VariousVolumeAttachAction.ReserveAction();
+        return post(ActionResponse.class, uri("/volumes/%s/action", volumeId)).entity(action).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ActionResponse initializeVolumeAttachment(String volumeId, VolumeConnectorOption option) {
+        Objects.requireNonNull(volumeId);
+        Objects.requireNonNull(option);
+        VariousVolumeAttachAction.initConnectionAction action = new VariousVolumeAttachAction.initConnectionAction();
+        action.setConnector(option);
+        return post(ActionResponse.class, uri("/volumes/%s/action", volumeId)).entity(action).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ActionResponse terminateVolumeAttachment(String volumeId, VolumeConnectorOption option) {
+        Objects.requireNonNull(volumeId);
+        Objects.requireNonNull(option);
+        VariousVolumeAttachAction.terminateConnectionAction action = new VariousVolumeAttachAction.terminateConnectionAction();
+        action.setConnector(option);
+        return post(ActionResponse.class, uri("/volumes/%s/action", volumeId)).entity(action).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ActionResponse unreserved(String volumeId) {
+        Objects.requireNonNull(volumeId);
+        VariousVolumeAttachAction.UnreserveAction action = new VariousVolumeAttachAction.UnreserveAction();
+        return post(ActionResponse.class, uri("/volumes/%s/action", volumeId)).entity(action).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ActionResponse rollDetaching(String volumeId) {
+        Objects.requireNonNull(volumeId);
+        VariousVolumeAttachAction.RollDetachingAction action = new VariousVolumeAttachAction.RollDetachingAction();
+        return post(ActionResponse.class, uri("/volumes/%s/action", volumeId)).entity(action).execute();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public ActionResponse beginDetaching(String volumeId) {
+        Objects.requireNonNull(volumeId);
+        VariousVolumeAttachAction.BeginAttachingAction action = new VariousVolumeAttachAction.BeginAttachingAction();
+        return post(ActionResponse.class, uri("/volumes/%s/action", volumeId)).entity(action).execute();
+    }
 }

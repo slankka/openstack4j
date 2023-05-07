@@ -10,6 +10,7 @@ import org.openstack4j.model.storage.block.VolumeType;
 import org.openstack4j.model.storage.block.VolumeTypeEncryption;
 import org.openstack4j.model.storage.block.VolumeUploadImage;
 import org.openstack4j.model.storage.block.options.UploadImageData;
+import org.openstack4j.openstack.storage.block.domain.VolumeConnectorOption;
 
 /**
  * Manages Volumes and Volume Type based operations against Block Storage (Cinder)
@@ -210,4 +211,48 @@ public interface BlockVolumeService extends RestService {
      * @return the action response
      */
     ActionResponse bootable(String volumeId, Boolean bootable);
+
+    /**
+     * Mark volume as reserved.
+     * @param volumeId the volumeId
+     * @author --ZHZH-- (sohu-inc.com 钟壮)
+     */
+    ActionResponse reserve(String volumeId);
+
+    /**
+     * Initialize volume attachment.
+     * @param volumeId the volumeId
+     * @param option connector
+     * @author --ZHZH-- (sohu-inc.com 钟壮)
+     */
+    ActionResponse initializeVolumeAttachment(String volumeId, VolumeConnectorOption option);
+
+    /**
+     * Terminate volume attachment
+     * @param volumeId the volumeId
+     * @param option connector
+     * @author --ZHZH-- (sohu-inc.com 钟壮)
+     */
+    ActionResponse terminateVolumeAttachment(String volumeId, VolumeConnectorOption option);
+
+    /**
+     * unmark volume as reserved
+     * @param volumeId the volumeId
+     * @author --ZHZH-- (sohu-inc.com 钟壮)
+     */
+    ActionResponse unreserved(String volumeId);
+
+    /**
+     * Roll back volume status to in-use (may useful when detaching failed, assumed the volume is still connected and attached.)
+     * @param volumeId the volumeId
+     * @author --ZHZH-- (sohu-inc.com 钟壮)
+     */
+    ActionResponse rollDetaching(String volumeId);
+
+    /**
+     * Update volume status to ‘detaching’..
+     * @param volumeId the volume
+     * @author --ZHZH-- (sohu-inc.com 钟壮)
+     */
+    ActionResponse beginDetaching(String volumeId);
 }
